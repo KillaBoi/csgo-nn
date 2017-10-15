@@ -1,8 +1,5 @@
 from __future__ import division
-import csv
-import numpy as np
 import pickle
-import pandas
 import database as db
 from sklearn.model_selection import cross_val_score
 from sklearn.neural_network import MLPClassifier
@@ -10,13 +7,9 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import GridSearchCV
 import itertools
 
-CSV_NAMES = ['wins','elo','score','momentum','vs','rating','ts','outcome']
 
 def search_mlp():
-    df = pandas.read_csv('data/training.csv', names=CSV_NAMES)
-    array = df.values
-    X = array[:,0:-1]
-    y = array[:,-1]
+    X,y = db.get_training_csv()
 
     scaler = StandardScaler()
     X = scaler.fit_transform(X)
@@ -34,10 +27,7 @@ def search_mlp():
 
 
 def train_mlp():
-    df = pandas.read_csv('data/training.csv', names=CSV_NAMES)
-    array = df.values
-    X = array[:,0:-1]
-    y = array[:,-1]
+    X,y = db.get_training_csv()
 
     scaler = StandardScaler()
     X = scaler.fit_transform(X)

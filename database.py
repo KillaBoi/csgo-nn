@@ -1,6 +1,7 @@
 import MySQLdb as sql
 import numpy as np
 import datetime
+import pandas as pd
 import time
 from warnings import filterwarnings
 filterwarnings('ignore', category = sql.Warning)
@@ -9,6 +10,15 @@ con = sql.connect (host = "127.0.0.1", user = "root", passwd = "root", db = "hok
 con.autocommit(True)
 c = con.cursor(sql.cursors.DictCursor)
 c_np = con.cursor()
+
+
+def get_training_csv():
+	csv_names = ['wins','elo','score','momentum','vs','rating','ts','outcome']
+	df = pd.read_csv('data/training.csv', names=csv_names)
+	array = df.values
+	X = array[:,0:-1]
+	y = array[:,-1]
+	return X,y
 
 
 def get_game_stats(table, game_id):
@@ -101,7 +111,6 @@ def get_new_games():
 
 def get_all(table='raw',order_col='date',direction='ASC'):
 	query_sql = "SELECT * FROM %s ORDER BY %s %s" % (table,order_col,direction)
-	#print(query_sql)
 	c.execute(query_sql)	
 	return c.fetchall()
 

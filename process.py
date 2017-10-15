@@ -136,9 +136,6 @@ def process_totals():
                 
         except Exception as e:
             print("### Error:",e)
-            print(winner, loser,win_score,lose_score)
-            print(g)
-            exit()
             pass
  
     return teams
@@ -191,6 +188,7 @@ def stat_avg_diff(a_stat, a_games ,b_stat, b_games):
 def setup_teams():
     teams = {}
     vs_teams = {}
+    maps ={'cbl': 0, 'cch': 0, 'd2': 0, 'inf': 0,'mrg': 0, 'nuke': 0, 'ovp': 0, 'tcn': 0, 'trn': 0, 'season': 0}
     games = db.get_all('teams', 'id')
     for g in games:
         teams[g['team']] = MAX_VS_MATCHES / 2
@@ -199,8 +197,8 @@ def setup_teams():
     for t in teams:
         vs_teams[t]['teams'] = teams
         vs_teams[t]['stats'] = {'elo': 1000, 'games': 0, 'wins': 0, 'score': 0,'momentum':0,'adr':0,'rating':0,'kills':0,'deaths':0,'kast':0,'ts':trueskill.Rating()}
-        vs_teams[t]['map_wins'] = {'cbl': 0, 'cch': 0, 'd2': 0, 'inf': 0,'mrg': 0, 'nuke': 0, 'ovp': 0, 'tcn': 0, 'trn': 0, 'season': 0}
-        vs_teams[t]['map_games'] = {'cbl': 0, 'cch': 0, 'd2': 0, 'inf': 0,'mrg': 0, 'nuke': 0, 'ovp': 0, 'tcn': 0, 'trn': 0, 'season': 0}
+        vs_teams[t]['map_wins'] = maps
+        vs_teams[t]['map_games'] = maps
 
     return vs_teams
 
