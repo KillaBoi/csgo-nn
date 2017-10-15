@@ -116,9 +116,10 @@ def process_totals():
                     winner, loser = 'team_b','team_a'
                     win_score, lose_score = g['b_score'],g['a_score']
 
+                
                 teams[g[winner]]['stats']['ts'], teams[g[loser]]['stats']['ts'] = trueskill.rate_1vs1(teams[g[winner]]['stats']['ts'],teams[g[loser]]['stats']['ts'])
-                teams[g[winner]]['stats']['elo'], teams[g[loser]]['stats']['elo'] = elo(teams[g[winner]]['stats']['elo'], teams[g[lose_score]]['stats']['elo'])
-                teams[g[winner]]['stats']['wins'] += (1 + math.log(g[win_score] - g[lose_score]))
+                teams[g[winner]]['stats']['elo'], teams[g[loser]]['stats']['elo'] = elo(teams[g[winner]]['stats']['elo'], teams[g[loser]]['stats']['elo'])
+                teams[g[winner]]['stats']['wins'] += (1 + math.log(win_score - lose_score))
                 teams[g[loser]]['teams'][g[winner]] -= 1
                 
                 if teams[g[loser]]['teams'][g[winner]] < 0:
@@ -128,15 +129,17 @@ def process_totals():
                     teams[g[winner]]['teams'][g[loser]] = MAX_VS_MATCHES
                 
                 teams[g[winner]]['teams'][g['team_a']] += 1
-                teams[g[winner]]['map_wins'][g['map']] += (1 + math.log(g[win_score] - g[lose_score]))
+                teams[g[winner]]['map_wins'][g['map']] += (1 + math.log(win_score - lose_score))
                 teams[g[winner]]['stats']['rating']+=WIN_RATING_SCORE
                 teams[g[loser]]['stats']['momentum'] = round(teams[g[loser]]['stats']['momentum']/LOSS_MOMENTUM,4)
                 teams[g[winner]]['stats']['momentum'] += 1 
-
+                
         except Exception as e:
-            #pass
+            print("### Error:",e)
+            print(winner, loser,win_score,lose_score)
             print(g)
-            print(e)
+            exit()
+            pass
  
     return teams
 

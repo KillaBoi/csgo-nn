@@ -2,8 +2,10 @@ import MySQLdb as sql
 import numpy as np
 import datetime
 import time
+from warnings import filterwarnings
+filterwarnings('ignore', category = sql.Warning)
 
-con = sql.connect (host = "127.0.0.1", user = "root", passwd = "root", db = "csgo")
+con = sql.connect (host = "127.0.0.1", user = "root", passwd = "root", db = "hokkaido")
 con.autocommit(True)
 c = con.cursor(sql.cursors.DictCursor)
 c_np = con.cursor()
