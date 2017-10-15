@@ -1,5 +1,5 @@
 
-# Counter-Strike: GO Predictor
+# Counter-Strike: GO Neural Network
 
 Hello cool person, this is a machine learning predictor I made for professional counter-strike matches. This latest version can predict about 66% of matches using stats from HLTV.org and a multilayer perceptron neural network. 
 
@@ -10,7 +10,6 @@ I used beautifulsoup, numpy, pandas, sklearn, trueskill, progressbar, MySQLdb ju
 
 ```
 pip install beautifulsoup4 numpy sklearn pandas trueskill progressbar2
-
 ```
 Next you need to import the database of games included in the data folder and update the database.py file with your mysql user,pass, and db name.
 

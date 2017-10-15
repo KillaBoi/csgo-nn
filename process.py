@@ -15,6 +15,7 @@ MIN_GAMES = 5
 WIN_RATING_SCORE = 5
 LOSS_MOMENTUM = 2
 
+
 def elo(winner_elo, loser_elo):
     k = 50
     r1 = math.pow(10, float(winner_elo / 400))
@@ -217,7 +218,6 @@ def export_training_set():
             del g['adr']
             del g['map_score']
             full_write.writerow(g)
-
 
 
 def main():
